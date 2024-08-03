@@ -1,0 +1,44 @@
+After the above:
+	Tizen Studio began to successfully launch the Samsung Account login page!
+	I was able to generate certificates at Tools->Certificate Manager->Add New->Samsung->Mobile/Wearable:
+	Created a new certificate profile (which I named “Rita”)
+	Created a new author certificate and left the “Apply the same password” box checked
+	Clicked OK and the Samsung Login Portal appeared in Chrome alongside a window with a 5-minute timer
+	When my login was successful, the page redirected to http://localhost:4794/signin/callback 58 which displayed “Login Successful. Please continue on the Certificate Manager UI”
+	Created a new distributor certificate
+	Selected my paired Galaxy Watch Active2’s DUID which automatically appeared in the list
+
+
+Closed Tizen Studio, then found certificate files in C:\Users\Spurdo\SamsungCertificate\Rita.
+	Copied all the contents of C:\Users\Spurdo\SamsungCertificate\Rita to three locations, after removing any preexisting files from the other locations:
+	C:\Program Files\Galaxy Watch Studio\tizen\keystore
+	C:\Users\Spurdo\GearWatchDesigner\keystore
+	C:\Users\Spurdo\Downloads\Fit2Installer\cert
+
+
+Opened/created my Rita.gws file in Galaxy Watch Studio
+
+	Clicked Project->Build
+	Yes and Generate to AOD popups
+	Clicked Project->Build again
+	Yes to save project
+	Typed the author certificate password
+	Clicked build
+	Clicked OK on “Warning signing fail keystore password was incorrect” popup (ignore)
+	Closed Galaxy Watch Studio
+
+
+This time, Galaxy Watch Studio was able to generate C:\Users\Spurdo\Rita_TW5.tpk (D:\Programming\WatchFace)
+	Moved Rita_TW5.tpk to C:\Users\Spurdo\Downloads\Fit2Installer\sign_me
+	Held down Shift and while holding Shift, right-clicked in the Fit2Installer folder
+	Clicked “Open PowerShell window here”
+	Typed .\sdb.exe connect 192.168.120.64:26101 because 192.168.120.64 was my Galaxy 	Watch Active2’s IP address
+	Typed .\sign.bat
+	Entered the certificate password again
+	Typed .\install.bat
+
+
+On Galaxy Watch Active2:
+	Pressed the home button and touched Settings->Apps->Permissions->Rita->Sensors toggle ON. It took me a long time to realize that apps sideloaded this way cannot access 	Samsung Health Service data unless you do that every time you install them.
+	Pressed the home button and touched Settings->Watch Faces->Rita
+	Finally I am able to see my watch face from Galaxy Watch Studio on the Galaxy Watch Active2 screen!
